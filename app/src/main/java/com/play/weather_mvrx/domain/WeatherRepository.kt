@@ -11,4 +11,5 @@ class WeatherRepository @Inject constructor() {
             .just("Hello, world!")
             .delay(2, TimeUnit.SECONDS)
     }
+
 }
