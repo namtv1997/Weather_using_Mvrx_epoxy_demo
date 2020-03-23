@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Weather_Mvrx</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_fragment_loading_text">load</string>
+    <string name="hello_fragment_failure_text">error</string>
+</resources>
