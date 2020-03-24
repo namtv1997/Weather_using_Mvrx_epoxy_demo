@@ -2,7 +2,7 @@ package com.play.weather_mvrx.data.source
 
 import com.google.gson.GsonBuilder
 import com.play.weather_mvrx.data.repository.WeatherRepositoryImp
-import com.play.weather_mvrx.domain.WeatherRepository
+import com.play.weather_mvrx.domain.Weather
 import com.play.weather_mvrx.utils.Constant
 import dagger.Module
 import dagger.Provides
@@ -17,7 +17,6 @@ import javax.inject.Singleton
 class ApiModule {
 
     @Provides
-    @Singleton
     fun provideApiService(): ApiService {
         val gsonBuilder = GsonBuilder()
         gsonBuilder.excludeFieldsWithoutExposeAnnotation()
@@ -36,10 +35,9 @@ class ApiModule {
         return retrofit.create(ApiService::class.java)
     }
 
-//    @Singleton
-//    @Provides
-//    fun provideWeatherRepository( apiService: ApiService): WeatherRepository {
-//        return WeatherRepositoryImp(apiService)
-//    }
+    @Provides
+    fun provideWeatherRepository( apiService: ApiService): Weather {
+        return WeatherRepositoryImp(apiService)
+    }
 
 }
