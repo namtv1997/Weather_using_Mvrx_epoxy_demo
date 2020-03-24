@@ -23,6 +23,6 @@ class WeatherRepositoryImp( private  val apiService: ApiService) : Weather {
     }
 
     companion object{
-        var apiKey= Constant.API_Key16
+        var apiKey= Constant.API_Key1
     }
 }

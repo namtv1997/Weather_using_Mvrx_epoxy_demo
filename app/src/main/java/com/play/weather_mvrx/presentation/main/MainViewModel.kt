@@ -5,6 +5,8 @@ import com.airbnb.mvrx.MvRxState
 import com.airbnb.mvrx.PersistState
 import com.airbnb.mvrx.Uninitialized
 import com.play.weather_mvrx.data.response.GeoPositionSearch
+import com.play.weather_mvrx.data.response.WeatherCurent
+import com.play.weather_mvrx.data.response.WeatherResult
 import com.play.weather_mvrx.di.AssistedViewModelFactory
 import com.play.weather_mvrx.di.DaggerMvRxViewModelFactory
 import com.play.weather_mvrx.domain.repository.WeatherRepository
@@ -14,19 +16,29 @@ import com.squareup.inject.assisted.AssistedInject
 
 data class MainState(
     val message: Async<String> = Uninitialized,
-    val geoPositionSearch: Async<GeoPositionSearch> = Uninitialized
+    val geoPositionSearch: Async<GeoPositionSearch> = Uninitialized,
+    val weatherResult: Async<WeatherResult> = Uninitialized,
+    val listWeatherCurent: Async<ArrayList<WeatherCurent>> = Uninitialized
 ) : MvRxState
 
 class MainViewModel @AssistedInject constructor(@Assisted state: MainState, private val repo: WeatherRepository) : BaseViewModel<MainState>(state) {
 
-
-    fun sayHello() {
-        repo.sayHello().execute { copy(message = it) }
+    init {
+//        getDataWeatherCurrent()
+//        getDataWeather5days()
     }
 
     fun getDataGeoPositionSearch(q: String) {
         repo.getDataGeoPositionSearch(q).execute { copy(geoPositionSearch = it) }
     }
+
+//    fun getDataWeather5days(){
+//        repo.getDataWeather5days().execute { copy(weatherResult = it) }
+//    }
+//
+//    fun getDataWeatherCurrent(){
+//        repo.getDataWeatherCurrent().execute { copy(listWeatherCurent = it) }
+//    }
 
     @AssistedInject.Factory
     interface Factory :
@@ -34,7 +46,5 @@ class MainViewModel @AssistedInject constructor(@Assisted state: MainState, priv
         override fun create(state: MainState): MainViewModel
     }
 
-    companion object : DaggerMvRxViewModelFactory<MainViewModel, MainState>(
-        MainViewModel::class.java
-    )
+    companion object : DaggerMvRxViewModelFactory<MainViewModel, MainState>(MainViewModel::class.java)
 }

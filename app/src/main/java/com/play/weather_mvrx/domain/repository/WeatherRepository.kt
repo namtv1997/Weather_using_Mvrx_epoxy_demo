@@ -15,11 +15,6 @@ class WeatherRepository @Inject constructor(
     private val getWeatherDataCurrent: GetWeatherDataCurrent,
     private val getWeatherData5Days: GetWeatherData5Days ) {
 
-    fun sayHello(): Observable<String> {
-        return Observable
-            .just("Hello, NAM!")
-            .delay(2, TimeUnit.SECONDS)
-    }
 
     fun getDataGeoPositionSearch(q: String): Observable<GeoPositionSearch> {
         var geoPositionSearch = GeoPositionSearch()
@@ -27,6 +22,8 @@ class WeatherRepository @Inject constructor(
         getWeatherDataByGeoPositionSearchUseCase.execute(
             onSuccess = {
                 geoPositionSearch = it
+//                getDataWeather5days(it.key.toString())
+//                getDataWeatherCurrent(it.key.toString())
             },
             onError = {
                 it.printStackTrace()
