@@ -1,11 +1,11 @@
-package com.play.weather_mvrx.domain
+package com.play.weather_mvrx.domain.repository
 
 import com.play.weather_mvrx.data.response.GeoPositionSearch
 import com.play.weather_mvrx.data.response.WeatherCurent
 import com.play.weather_mvrx.data.response.WeatherResult
 import io.reactivex.Observable
 
-interface Weather{
+interface WeatherRepositoryHandle{
 
     fun getWeatherDataByGeoPositionSearch(q: String?) : Observable<GeoPositionSearch>
 

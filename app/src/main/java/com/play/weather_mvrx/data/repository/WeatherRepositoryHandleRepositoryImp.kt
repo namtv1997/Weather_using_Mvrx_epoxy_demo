@@ -4,11 +4,11 @@ import com.play.weather_mvrx.data.response.GeoPositionSearch
 import com.play.weather_mvrx.data.response.WeatherCurent
 import com.play.weather_mvrx.data.response.WeatherResult
 import com.play.weather_mvrx.data.source.ApiService
-import com.play.weather_mvrx.domain.Weather
+import com.play.weather_mvrx.domain.repository.WeatherRepositoryHandle
 import com.play.weather_mvrx.utils.Constant
 import io.reactivex.Observable
 
-class WeatherRepositoryImp( private  val apiService: ApiService) : Weather {
+class WeatherRepositoryHandleRepositoryImp(private  val apiService: ApiService) : WeatherRepositoryHandle {
 
     override fun getWeatherDataByGeoPositionSearch(q: String?): Observable<GeoPositionSearch> {
         return apiService.getWeatherDataByGeoPositionSearch(apiKey,q.toString())

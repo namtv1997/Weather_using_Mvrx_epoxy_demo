@@ -1,8 +1,8 @@
 package com.play.weather_mvrx.data.source
 
 import com.google.gson.GsonBuilder
-import com.play.weather_mvrx.data.repository.WeatherRepositoryImp
-import com.play.weather_mvrx.domain.Weather
+import com.play.weather_mvrx.data.repository.WeatherRepositoryHandleRepositoryImp
+import com.play.weather_mvrx.domain.repository.WeatherRepositoryHandle
 import com.play.weather_mvrx.utils.Constant
 import dagger.Module
 import dagger.Provides
@@ -11,7 +11,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 @Module
 class ApiModule {
@@ -36,8 +35,8 @@ class ApiModule {
     }
 
     @Provides
-    fun provideWeatherRepository( apiService: ApiService): Weather {
-        return WeatherRepositoryImp(apiService)
+    fun provideWeatherRepository( apiService: ApiService): WeatherRepositoryHandle {
+        return WeatherRepositoryHandleRepositoryImp(apiService)
     }
 
 }

@@ -4,6 +4,7 @@ import com.airbnb.mvrx.Async
 import com.airbnb.mvrx.MvRxState
 import com.airbnb.mvrx.PersistState
 import com.airbnb.mvrx.Uninitialized
+import com.play.weather_mvrx.data.entity.MainState
 import com.play.weather_mvrx.data.response.GeoPositionSearch
 import com.play.weather_mvrx.data.response.WeatherCurent
 import com.play.weather_mvrx.data.response.WeatherResult
@@ -13,13 +14,6 @@ import com.play.weather_mvrx.domain.repository.WeatherRepository
 import com.play.weather_mvrx.presentation.base.BaseViewModel
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
-
-data class MainState(
-    val message: Async<String> = Uninitialized,
-    val geoPositionSearch: Async<GeoPositionSearch> = Uninitialized,
-    val weatherResult: Async<WeatherResult> = Uninitialized,
-    val listWeatherCurent: Async<ArrayList<WeatherCurent>> = Uninitialized
-) : MvRxState
 
 class MainViewModel @AssistedInject constructor(@Assisted state: MainState, private val repo: WeatherRepository) : BaseViewModel<MainState>(state) {
 
