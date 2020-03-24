@@ -3,17 +3,16 @@ package com.play.weather_mvrx.domain.repository
 import com.play.weather_mvrx.data.response.GeoPositionSearch
 import com.play.weather_mvrx.data.response.WeatherCurent
 import com.play.weather_mvrx.data.response.WeatherResult
-import com.play.weather_mvrx.domain.usercase.GetWeatherData5Days
+import com.play.weather_mvrx.domain.usercase.GetWeatherData5DaysUseCase
 import com.play.weather_mvrx.domain.usercase.GetWeatherDataByGeoPositionSearchUseCase
-import com.play.weather_mvrx.domain.usercase.GetWeatherDataCurrent
+import com.play.weather_mvrx.domain.usercase.GetWeatherDataCurrentUseCase
 import io.reactivex.Observable
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class WeatherRepository @Inject constructor(
     private val getWeatherDataByGeoPositionSearchUseCase: GetWeatherDataByGeoPositionSearchUseCase,
-    private val getWeatherDataCurrent: GetWeatherDataCurrent,
-    private val getWeatherData5Days: GetWeatherData5Days ) {
+    private val getWeatherDataCurrentUseCase: GetWeatherDataCurrentUseCase,
+    private val getWeatherData5DaysUseCase: GetWeatherData5DaysUseCase ) {
 
 
     fun getDataGeoPositionSearch(q: String): Observable<GeoPositionSearch> {
@@ -34,8 +33,8 @@ class WeatherRepository @Inject constructor(
 
     fun getDataWeather5days(keyRegion: String): Observable<WeatherResult> {
         var weatherResult = WeatherResult()
-        getWeatherData5Days.saveKeyRegion(keyRegion)
-        getWeatherData5Days.execute(
+        getWeatherData5DaysUseCase.saveKeyRegion(keyRegion)
+        getWeatherData5DaysUseCase.execute(
             onSuccess = {
                 weatherResult = it
             },
@@ -48,8 +47,8 @@ class WeatherRepository @Inject constructor(
 
     fun getDataWeatherCurrent(keyRegion: String): Observable<ArrayList<WeatherCurent>> {
         var listWeatherCurent = ArrayList<WeatherCurent>()
-        getWeatherDataCurrent.saveLatAndLon(keyRegion)
-        getWeatherDataCurrent.execute(
+        getWeatherDataCurrentUseCase.saveLatAndLon(keyRegion)
+        getWeatherDataCurrentUseCase.execute(
             onSuccess = {
                 listWeatherCurent = it
             },

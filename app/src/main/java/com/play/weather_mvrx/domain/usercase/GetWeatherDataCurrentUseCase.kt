@@ -6,7 +6,7 @@ import com.play.weather_mvrx.domain.usercase.base.ObservableUseCase
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class GetWeatherDataCurrent @Inject constructor(private val repository: WeatherRepositoryHandle) : ObservableUseCase<ArrayList<WeatherCurent>>() {
+class GetWeatherDataCurrentUseCase @Inject constructor(private val repository: WeatherRepositoryHandle) : ObservableUseCase<ArrayList<WeatherCurent>>() {
 
     private var keyRegion: String? = null
 

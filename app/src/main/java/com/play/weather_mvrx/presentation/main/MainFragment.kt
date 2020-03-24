@@ -41,7 +41,6 @@ class MainFragment : BaseMvRxFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        requestPermission()
     }
 
     override fun invalidate() = withState(viewModel) { state ->
@@ -125,7 +124,7 @@ class MainFragment : BaseMvRxFragment() {
         mLastLocation = location
         latitude = mLastLocation.latitude.toString()
         longitude = mLastLocation.longitude.toString()
-        viewModel.getDataGeoPositionSearch("${latitude},${longitude}")
+       viewModel.getDataGeoPositionSearch("${latitude},${longitude}")
     }
 
     companion object {

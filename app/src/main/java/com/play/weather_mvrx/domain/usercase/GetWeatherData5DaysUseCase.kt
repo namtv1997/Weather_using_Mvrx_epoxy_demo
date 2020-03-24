@@ -6,7 +6,7 @@ import com.play.weather_mvrx.domain.usercase.base.ObservableUseCase
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class GetWeatherData5Days @Inject constructor(private val repository: WeatherRepositoryHandle) : ObservableUseCase<WeatherResult>() {
+class GetWeatherData5DaysUseCase @Inject constructor(private val repository: WeatherRepositoryHandle) : ObservableUseCase<WeatherResult>() {
 
     private var keyRegion: String? = null
 
