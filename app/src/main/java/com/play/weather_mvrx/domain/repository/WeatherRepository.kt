@@ -12,7 +12,8 @@ import javax.inject.Inject
 class WeatherRepository @Inject constructor(
     private val getWeatherDataByGeoPositionSearchUseCase: GetWeatherDataByGeoPositionSearchUseCase,
     private val getWeatherDataCurrentUseCase: GetWeatherDataCurrentUseCase,
-    private val getWeatherData5DaysUseCase: GetWeatherData5DaysUseCase ) {
+    private val getWeatherData5DaysUseCase: GetWeatherData5DaysUseCase
+) {
 
 
     fun getDataGeoPositionSearch(q: String): Observable<GeoPositionSearch> {
@@ -21,12 +22,11 @@ class WeatherRepository @Inject constructor(
         getWeatherDataByGeoPositionSearchUseCase.execute(
             onSuccess = {
                 geoPositionSearch = it
-//                getDataWeather5days(it.key.toString())
-//                getDataWeatherCurrent(it.key.toString())
             },
             onError = {
                 it.printStackTrace()
             }
+
         )
         return Observable.just(geoPositionSearch)
     }

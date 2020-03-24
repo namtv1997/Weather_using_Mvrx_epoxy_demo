@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_main.*
 import pub.devrel.easypermissions.EasyPermissions
 
 class MainFragment : BaseMvRxFragment() {
+
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mLocationRequest: LocationRequest
     private lateinit var mLastLocation: Location
@@ -29,7 +30,7 @@ class MainFragment : BaseMvRxFragment() {
     private var longitude: String? = null
     private var locationManager: LocationManager? = null
 
-    val viewModel: MainViewModel by fragmentViewModel()
+    private val viewModel: MainViewModel by fragmentViewModel()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -40,12 +41,9 @@ class MainFragment : BaseMvRxFragment() {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    }
-
     override fun invalidate() = withState(viewModel) { state ->
 
-        messageTextView.text=state.geoPositionSearch()?.englishName
+       tvTempDay2.text=state.geoPositionSearch()?.englishName
     }
 
     private fun requestPermission() {

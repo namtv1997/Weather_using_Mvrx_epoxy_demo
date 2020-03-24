@@ -1,20 +1,286 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="#5EAFD4"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.main.MainFragment">
 
-    <Button
-        android:id="@+id/helloButton"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvLabelYear"
+        style="@style/TextTitleLarge"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:paddingStart="@dimen/spacing_normal"
+        android:textSize="@dimen/font_huge"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlSymmetry"/>
+
+    <LinearLayout
+        android:id="@+id/lnDateTime"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="hello"/>
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/tvLabelYear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvLabelYear"
+        app:layout_constraintTop_toTopOf="@id/tvLabelYear">
+
+        <TextView
+            android:id="@+id/tvDay"
+            style="@style/TextTitleLarge"
+            android:layout_width="match_parent"/>
+
+        <TextView
+            android:id="@+id/tvDate"
+            style="@style/TextTitleLarge"
+            android:layout_width="match_parent"/>
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/messageTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:id="@+id/tvCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/spacing_small"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_huge"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lnDateTime" />
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/lnLatitue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCountry">
+
+        <TextView
+            style="@style/TextTitleLarge"
+            android:layout_width="150dp"
+            android:text="@string/label_latitue" />
+
+        <TextView
+            style="@style/TextTitleLarge" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnLongtitue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lnLatitue">
+
+        <TextView
+            style="@style/TextTitleLarge"
+            android:layout_width="150dp"
+            android:text="@string/label_longtitue" />
+
+        <TextView
+            style="@style/TextTitleLarge"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnTimeZone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lnLongtitue">
+
+        <TextView
+            style="@style/TextTitleLarge"
+            android:layout_width="150dp"
+            android:text="@string/label_timezone" />
+
+        <TextView
+            style="@style/TextTitleLarge"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnRegion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lnTimeZone">
+
+        <TextView
+            style="@style/TextTitleLarge"
+            android:layout_width="150dp"
+            android:text="@string/label_region" />
+
+        <TextView
+            style="@style/TextTitleLarge" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivSttWeather"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:srcCompat="@drawable/img_sun"
+        android:layout_marginTop="@dimen/spacing_tiny"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lnRegion"
+        tools:ignore="ContentDescription"/>
+
+    <TextView
+        android:id="@+id/tvDegree"
+        style="@style/TextTitleLarge"
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:paddingStart="@dimen/spacing_giant"
+        android:textSize="48sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivSttWeather"
+        tools:ignore="RtlSymmetry" />
+
+    <LinearLayout
+        android:id="@+id/lnWindHumidity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/tvDegree"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvDegree"
+        app:layout_constraintTop_toTopOf="@id/tvDegree">
+
+        <TextView
+            android:id="@+id/tvWindSpeed"
+            style="@style/TextTitleLarge"
+            android:layout_width="match_parent"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/tvHumidity"
+            style="@style/TextTitleLarge"
+            android:layout_width="match_parent"
+            android:textSize="24sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lnWindHumidity">
+
+        <TextView
+            android:id="@+id/tvTueDay"
+            style="@style/TextContentLarge"
+            android:gravity="center"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tvWednesday"
+            style="@style/TextContentLarge"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tvThurday"
+            style="@style/TextContentLarge"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tvFriDay"
+            style="@style/TextContentLarge"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnStatusWeather"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lnDate">
+
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:srcCompat="@drawable/img_sun"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:srcCompat="@drawable/img_sun"
+            tools:ignore="ContentDescription"/>
+
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:srcCompat="@drawable/img_sun"
+            tools:ignore="ContentDescription"/>
+
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:srcCompat="@drawable/img_sun"
+            tools:ignore="ContentDescription"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lnStatusTemp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lnStatusWeather">
+
+        <TextView
+            android:id="@+id/tvTempDay1"
+            style="@style/TextContentLarge"
+            android:gravity="center"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tvTempDay2"
+            style="@style/TextContentLarge"
+            android:gravity="center"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tvTempDay3"
+            style="@style/TextContentLarge"
+            android:gravity="center"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tvTempDay4"
+            style="@style/TextContentLarge"
+            android:gravity="center"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
