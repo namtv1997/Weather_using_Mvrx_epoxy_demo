@@ -91,9 +91,7 @@ class MainFragment : BaseMvRxFragment() {
     }
 
     private fun onGPS() {
-
         val builder = AlertDialog.Builder(activity)
-
         builder.setMessage(getString(R.string.enable_gps)).setCancelable(false)
             .setPositiveButton(getString(R.string.yes)) { _, _ ->
                 startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
@@ -109,7 +107,6 @@ class MainFragment : BaseMvRxFragment() {
 
     private fun startLocationUpdates() {
         // Create the location request to start receiving updates
-
         mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         mLocationRequest.interval = INTERVAL
         mLocationRequest.fastestInterval = FASTEST_INTERVAL
@@ -124,11 +121,7 @@ class MainFragment : BaseMvRxFragment() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
 
-        fusedLocationClient.requestLocationUpdates(
-            mLocationRequest,
-            mLocationCallback,
-            Looper.myLooper()
-        )
+        fusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
     }
 
     private val mLocationCallback = object : LocationCallback() {
@@ -144,11 +137,13 @@ class MainFragment : BaseMvRxFragment() {
         mLastLocation = location
         latitude = mLastLocation.latitude.toString()
         longitude = mLastLocation.longitude.toString()
-        viewModel.getDataGeoPositionSearch("${latitude},${longitude}")
+        viewModel.getDataGeoPositionSearch("$latitude, $longitude")
     }
 
 
     private fun getDataPositionSearch(geoPositionSearch: GeoPositionSearch) {
+        viewModel.getDataWeather5days(geoPositionSearch.key!!)
+        viewModel.getDataWeatherCurrent(geoPositionSearch.key)
         tvCountry.text = geoPositionSearch.country?.englishName
         tvLatitue.text = geoPositionSearch.geoPosition?.latitude.toString()
         tvLongtitue.text = geoPositionSearch.geoPosition?.longitude.toString()
@@ -176,7 +171,6 @@ class MainFragment : BaseMvRxFragment() {
 
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
     private fun getDataWeather5day(weatherResult: WeatherResult) {
-
         val sdf5days = SimpleDateFormat("yyyy-MM-dd")
         val sdfCustom = SimpleDateFormat("EEE")
         val arr = weatherResult.DailyForecasts?.get(1)?.date.toString().split(":")

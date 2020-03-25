@@ -11,18 +11,18 @@ import io.reactivex.Observable
 class WeatherRepositoryHandleRepositoryImp(private  val apiService: ApiService) : WeatherRepositoryHandle {
 
     override fun getWeatherDataByGeoPositionSearch(q: String?): Observable<GeoPositionSearch> {
-        return apiService.getWeatherDataByGeoPositionSearch(apiKey,q.toString())
+        return apiService.getWeatherDataByGeoPositionSearch(apiKey, q.toString())
     }
 
     override fun getWeatherData5Days(keyRegion: String?, details: Boolean): Observable<WeatherResult> {
-        return apiService.getWeatherData5Days(keyRegion.toString(),apiKey,true)
+        return apiService.getWeatherData5Days(keyRegion.toString(), apiKey,true)
     }
 
     override fun getWeatherDataCurrent(keyRegion: String?, details: Boolean): Observable<ArrayList<WeatherCurent>> {
-        return apiService.getWeatherDataCurrent(keyRegion.toString(),apiKey,true)
+        return apiService.getWeatherDataCurrent(keyRegion.toString(), apiKey,true)
     }
 
     companion object{
-        var apiKey= Constant.API_Key12
+        var apiKey = Constant.API_Key14
     }
 }

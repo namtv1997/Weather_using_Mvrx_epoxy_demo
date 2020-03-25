@@ -13,11 +13,6 @@ import com.squareup.inject.assisted.AssistedInject
 
 class MainViewModel @AssistedInject constructor(@Assisted state: MainState, private val repo: WeatherRepository) : BaseViewModel<MainState>(state) {
 
-    init {
-        getDataWeather5days("337169")
-        getDataWeatherCurrent("337169")
-    }
-
     fun getDataGeoPositionSearch(latitue: String) {
         repo.getDataGeoPositionSearch(latitue, ::setDataGeoPositionSearch)
     }
@@ -26,7 +21,7 @@ class MainViewModel @AssistedInject constructor(@Assisted state: MainState, priv
         repo.getDataGeoPositionObservable(geoPositionSearch).execute { copy(geoPositionSearch = it) }
     }
 
-   private fun getDataWeather5days(keyRegion: String) {
+     fun getDataWeather5days(keyRegion: String) {
         repo.getDataWeather5days(keyRegion, ::setgetDataWeather5days)
     }
 
@@ -34,11 +29,11 @@ class MainViewModel @AssistedInject constructor(@Assisted state: MainState, priv
         repo.getDataWeather5daysObservable(weatherResult).execute { copy(weatherResult = it) }
     }
 
-  private  fun getDataWeatherCurrent(keyRegion: String ) {
-        repo.getDataWeatherCurrent(keyRegion,::setDataWeatherCurrent)
+     fun getDataWeatherCurrent(keyRegion: String) {
+        repo.getDataWeatherCurrent(keyRegion, ::setDataWeatherCurrent)
     }
 
-   private fun setDataWeatherCurrent(listWeatherCurent: ArrayList<WeatherCurent>) {
+    private fun setDataWeatherCurrent(listWeatherCurent: ArrayList<WeatherCurent>) {
         repo.getDataWeatherCurrentObservable(listWeatherCurent).execute { copy(listWeatherCurent = it) }
     }
 

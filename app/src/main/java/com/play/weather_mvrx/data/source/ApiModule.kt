@@ -35,7 +35,7 @@ class ApiModule {
     }
 
     @Provides
-    fun provideWeatherRepository( apiService: ApiService): WeatherRepositoryHandle {
+    fun provideWeatherRepository(apiService: ApiService): WeatherRepositoryHandle {
         return WeatherRepositoryHandleRepositoryImp(apiService)
     }
 

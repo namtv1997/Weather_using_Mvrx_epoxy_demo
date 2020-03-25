@@ -15,7 +15,7 @@ class WeatherRepository @Inject constructor(
     private val getWeatherData5DaysUseCase: GetWeatherData5DaysUseCase
 ) {
 
-    fun getDataGeoPositionSearch(latitue: String ,geoPositionSearch : (GeoPositionSearch) -> Unit){
+    fun getDataGeoPositionSearch(latitue: String, geoPositionSearch: (GeoPositionSearch) -> Unit) {
         getWeatherDataByGeoPositionSearchUseCase.saveLatAndLon(latitue)
         getWeatherDataByGeoPositionSearchUseCase.execute(
             onSuccess = {
@@ -31,7 +31,7 @@ class WeatherRepository @Inject constructor(
         return Observable.just(geoPositionSearch)
     }
 
-    fun getDataWeather5days(keyRegion: String ,weatherResult : (WeatherResult) -> Unit) {
+    fun getDataWeather5days(keyRegion: String, weatherResult: (WeatherResult) -> Unit) {
         getWeatherData5DaysUseCase.saveKeyRegion(keyRegion)
         getWeatherData5DaysUseCase.execute(
             onSuccess = {
@@ -47,7 +47,7 @@ class WeatherRepository @Inject constructor(
         return Observable.just(geoPositionSearch)
     }
 
-    fun getDataWeatherCurrent(keyRegion: String ,listWeatherCurent :(ArrayList<WeatherCurent>) ->Unit) {
+    fun getDataWeatherCurrent(keyRegion: String, listWeatherCurent: (ArrayList<WeatherCurent>) -> Unit) {
         getWeatherDataCurrentUseCase.saveLatAndLon(keyRegion)
         getWeatherDataCurrentUseCase.execute(
             onSuccess = {

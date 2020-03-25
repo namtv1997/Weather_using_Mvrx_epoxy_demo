@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.fragment.app.FragmentActivity
 
 class App : Application() {
-
     lateinit var appComponent: AppComponent
 
     override fun onCreate() {

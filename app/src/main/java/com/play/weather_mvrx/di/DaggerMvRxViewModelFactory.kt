@@ -7,9 +7,7 @@ import com.airbnb.mvrx.ViewModelContext
 import com.play.weather_mvrx.app.appComponent
 import com.play.weather_mvrx.presentation.base.BaseViewModel
 
-abstract class DaggerMvRxViewModelFactory<VM : BaseViewModel<S>, S : MvRxState>(
-    private val viewModelClass: Class<out BaseViewModel<S>>
-) : MvRxViewModelFactory<VM, S> {
+abstract class DaggerMvRxViewModelFactory<VM : BaseViewModel<S>, S : MvRxState>(private val viewModelClass: Class<out BaseViewModel<S>>) : MvRxViewModelFactory<VM, S> {
 
     override fun create(viewModelContext: ViewModelContext, state: S): VM? {
         return createViewModel(viewModelContext.activity, state)
