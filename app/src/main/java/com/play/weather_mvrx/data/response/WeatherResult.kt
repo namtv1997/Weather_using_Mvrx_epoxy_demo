@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName
 
  data class WeatherResult(
 
-
     @SerializedName("Headline")
     @Expose
     var Headline: Headline = Headline(),

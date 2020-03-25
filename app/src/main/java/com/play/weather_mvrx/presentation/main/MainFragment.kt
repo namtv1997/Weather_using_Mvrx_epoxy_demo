@@ -1,6 +1,7 @@
 package com.play.weather_mvrx.presentation.main
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -9,7 +10,6 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,9 +18,12 @@ import com.google.android.gms.location.*
 
 import com.play.weather_mvrx.R
 import com.play.weather_mvrx.data.response.GeoPositionSearch
+import com.play.weather_mvrx.data.response.WeatherCurent
+import com.play.weather_mvrx.data.response.WeatherResult
 import kotlinx.android.synthetic.main.fragment_main.*
 import pub.devrel.easypermissions.EasyPermissions
 import java.text.SimpleDateFormat
+import kotlin.math.roundToInt
 
 class MainFragment : BaseMvRxFragment() {
 
@@ -39,50 +42,25 @@ class MainFragment : BaseMvRxFragment() {
         requestPermission()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
+    @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun invalidate() = withState(viewModel) { state ->
 
-        tvCountry.text = state.geoPositionSearch()?.country?.englishName
-        tvLatitue.text = state.geoPositionSearch()?.geoPosition?.latitude.toString()
-        tvLongtitue.text = state.geoPositionSearch()?.geoPosition?.longitude.toString()
-        tvTimeZone.text = state.geoPositionSearch()?.timeZone?.name
-        tvRegion.text = state.geoPositionSearch()?.region?.englishName
+        try {
+            getDataPositionSearch(state.geoPositionSearch()!!)
+        } catch (e: Exception) { }
 
-//        val dateInStringDay1 = state.weatherResult()?.DailyForecasts!![1].date
-//        val dateInStringDay2 = state.weatherResult()?.DailyForecasts!![2].date
-//        val dateInStringDay3 = state.weatherResult()?.DailyForecasts!![3].date
-//        val dateInStringDay4 = state.weatherResult()?.DailyForecasts!![4].date
-//
-//        val sdf5days = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-//        val shortdateInStringDay1 = dateInStringDay1?.substring(0, 19)
-//        val shortdateInStringDay2 = dateInStringDay2?.substring(0, 19)
-//        val shortdateInStringDay3 = dateInStringDay3?.substring(0, 19)
-//        val shortdateInStringDay4 = dateInStringDay4?.substring(0, 19)
-//
-//        val sdf5days1 = SimpleDateFormat("EEE")
-//        val day1 = sdf5days.parse(shortdateInStringDay1)
-//        val day2 = sdf5days.parse(shortdateInStringDay2)
-//        val day3 = sdf5days.parse(shortdateInStringDay3)
-//        val day4 = sdf5days.parse(shortdateInStringDay4)
-//
-//        val resultday1 = sdf5days1.format(day1)
-//        val resultday2 = sdf5days1.format(day2)
-//        val resultday3 = sdf5days1.format(day3)
-//        val resultday4 = sdf5days1.format(day4)
-//
-//        tvTueDay.text = resultday1
-//        tvWednesday.text = resultday2
-//        tvThurday.text = resultday3
-//        tvFriDay.text = resultday4
+        try {
+            getDataWeatherCurrent(state.listWeatherCurent()!!)
+        } catch (e: Exception) { }
 
-        tvTempDay1.text = state.weatherResult()?.Headline?.category.toString()
+        try {
+            getDataWeather5day(state.weatherResult()!!)
+        } catch (e: Exception) { }
+
     }
 
     private fun requestPermission() {
@@ -169,8 +147,64 @@ class MainFragment : BaseMvRxFragment() {
         viewModel.getDataGeoPositionSearch("${latitude},${longitude}")
     }
 
-    private fun convertFahrenheitToKelvin(fahrenheit: Float): Double {
-        return (5.0 / 9 * (fahrenheit - 32) + 273)
+
+    private fun getDataPositionSearch(geoPositionSearch: GeoPositionSearch) {
+        tvCountry.text = geoPositionSearch.country?.englishName
+        tvLatitue.text = geoPositionSearch.geoPosition?.latitude.toString()
+        tvLongtitue.text = geoPositionSearch.geoPosition?.longitude.toString()
+        tvTimeZone.text = geoPositionSearch.timeZone?.name
+        tvRegion.text = geoPositionSearch.region?.englishName
+    }
+
+    @SuppressLint("SetTextI18n", "SimpleDateFormat")
+    private fun getDataWeatherCurrent(listWeatherCurent: ArrayList<WeatherCurent>) {
+        tvDegree.text = "${listWeatherCurent[0].temperature.metric.value.toString()} º"
+        tvHumidity.text = "${listWeatherCurent[0].relativeHumidity.toString()} %"
+        tvWindSpeed.text = "${listWeatherCurent[0].wind.speed.metric.value} km/h"
+
+        val sdf5days = SimpleDateFormat("yyyy-MM-dd")
+        val sdfCustom = SimpleDateFormat("yyyy EEEE MMMM-dd")
+        val arr = listWeatherCurent[0].localObservationDateTime.toString().split(":")
+        val arrResult = arr[0].split("T")
+        val result = sdfCustom.format(sdf5days.parse(arrResult[0]))
+        val splitString = result.split(" ")
+        tvLabelYear.text = splitString[0]
+        tvDay.text = splitString[1]
+        tvDate.text = splitString[2]
+
+    }
+
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
+    private fun getDataWeather5day(weatherResult: WeatherResult) {
+
+        val sdf5days = SimpleDateFormat("yyyy-MM-dd")
+        val sdfCustom = SimpleDateFormat("EEE")
+        val arr = weatherResult.DailyForecasts?.get(1)?.date.toString().split(":")
+        val arr1 = weatherResult.DailyForecasts?.get(2)?.date.toString().split(":")
+        val arr2 = weatherResult.DailyForecasts?.get(3)?.date.toString().split(":")
+        val arr3 = weatherResult.DailyForecasts?.get(4)?.date.toString().split(":")
+        val arrResult = arr[0].split("T")
+        val arrResult1 = arr1[0].split("T")
+        val arrResult2 = arr2[0].split("T")
+        val arrResult3 = arr3[0].split("T")
+        val result = sdfCustom.format(sdf5days.parse(arrResult[0]))
+        val result1 = sdfCustom.format(sdf5days.parse(arrResult1[0]))
+        val result2 = sdfCustom.format(sdf5days.parse(arrResult2[0]))
+        val result3 = sdfCustom.format(sdf5days.parse(arrResult3[0]))
+        tvTueDay.text = result.toString()
+        tvWednesday.text = result1.toString()
+        tvThurday.text = result2.toString()
+        tvFriDay.text = result3.toString()
+
+        val resultTemp = weatherResult.DailyForecasts?.get(1)?.temperature?.minimum?.value?.minus(1)?.times(5)?.div(9)?.roundToInt()
+        val resultTemp1 = weatherResult.DailyForecasts?.get(2)?.temperature?.minimum?.value?.minus(1)?.times(5)?.div(9)?.roundToInt()
+        val resultTemp2 = weatherResult.DailyForecasts?.get(3)?.temperature?.minimum?.value?.minus(1)?.times(5)?.div(9)?.roundToInt()
+        val resultTemp3 = weatherResult.DailyForecasts?.get(4)?.temperature?.minimum?.value?.minus(1)?.times(5)?.div(9)?.roundToInt()
+        tvTempDay1.text = "${resultTemp}ºC"
+        tvTempDay2.text = "${resultTemp1}ºC"
+        tvTempDay3.text = "${resultTemp2}ºC"
+        tvTempDay4.text = "${resultTemp3}ºC"
+
     }
 
     companion object {
