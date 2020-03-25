@@ -10,5 +10,6 @@ import com.play.weather_mvrx.data.response.WeatherResult
 data class MainState(
     val geoPositionSearch: Async<GeoPositionSearch> = Uninitialized,
     val weatherResult: Async<WeatherResult> = Uninitialized,
-    val listWeatherCurent: Async<ArrayList<WeatherCurent>> = Uninitialized
+    val listWeatherCurent: Async<ArrayList<WeatherCurent>> = Uninitialized,
+    val key: String =geoPositionSearch()?.key.toString()
 ) : MvRxState

@@ -15,49 +15,51 @@ class WeatherRepository @Inject constructor(
     private val getWeatherData5DaysUseCase: GetWeatherData5DaysUseCase
 ) {
 
-
-    fun getDataGeoPositionSearch(q: String): Observable<GeoPositionSearch> {
-        var geoPositionSearch = GeoPositionSearch()
-        getWeatherDataByGeoPositionSearchUseCase.saveLatAndLon(q)
+    fun getDataGeoPositionSearch(latitue: String ,geoPositionSearch : (GeoPositionSearch) -> Unit){
+        getWeatherDataByGeoPositionSearchUseCase.saveLatAndLon(latitue)
         getWeatherDataByGeoPositionSearchUseCase.execute(
             onSuccess = {
-                geoPositionSearch = it
+                geoPositionSearch.invoke(it)
             },
             onError = {
                 it.printStackTrace()
             }
-
         )
+    }
+
+    fun getDataGeoPositionObservable(geoPositionSearch: GeoPositionSearch): Observable<GeoPositionSearch> {
         return Observable.just(geoPositionSearch)
     }
 
-    fun getDataWeather5days(keyRegion: String): Observable<WeatherResult> {
-        var weatherResult = WeatherResult()
+    fun getDataWeather5days(keyRegion: String ,weatherResult : (WeatherResult) -> Unit) {
         getWeatherData5DaysUseCase.saveKeyRegion(keyRegion)
         getWeatherData5DaysUseCase.execute(
             onSuccess = {
-                weatherResult = it
+                weatherResult.invoke(it)
             },
             onError = {
                 it.printStackTrace()
             }
         )
-        return Observable.just(weatherResult)
     }
 
-    fun getDataWeatherCurrent(keyRegion: String): Observable<ArrayList<WeatherCurent>> {
-        var listWeatherCurent = ArrayList<WeatherCurent>()
+    fun getDataWeather5daysObservable(geoPositionSearch: WeatherResult): Observable<WeatherResult> {
+        return Observable.just(geoPositionSearch)
+    }
+
+    fun getDataWeatherCurrent(keyRegion: String ,listWeatherCurent :(ArrayList<WeatherCurent>) ->Unit) {
         getWeatherDataCurrentUseCase.saveLatAndLon(keyRegion)
         getWeatherDataCurrentUseCase.execute(
             onSuccess = {
-                listWeatherCurent = it
+                listWeatherCurent.invoke(it)
             },
             onError = {
                 it.printStackTrace()
             }
         )
-
-        return Observable.just(listWeatherCurent)
     }
 
+    fun getDataWeatherCurrentObservable(listWeatherCurent: ArrayList<WeatherCurent>): Observable<ArrayList<WeatherCurent>> {
+        return Observable.just(listWeatherCurent)
+    }
 }

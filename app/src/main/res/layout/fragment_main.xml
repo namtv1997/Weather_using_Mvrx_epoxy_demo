@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#5EAFD4"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.main.MainFragment">
 
     <TextView
@@ -15,7 +15,7 @@
         android:textSize="@dimen/font_huge"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="RtlSymmetry"/>
+        tools:ignore="RtlSymmetry" />
 
     <LinearLayout
         android:id="@+id/lnDateTime"
@@ -30,12 +30,12 @@
         <TextView
             android:id="@+id/tvDay"
             style="@style/TextTitleLarge"
-            android:layout_width="match_parent"/>
+            android:layout_width="match_parent" />
 
         <TextView
             android:id="@+id/tvDate"
             style="@style/TextTitleLarge"
-            android:layout_width="match_parent"/>
+            android:layout_width="match_parent" />
 
     </LinearLayout>
 
@@ -67,6 +67,7 @@
             android:text="@string/label_latitue" />
 
         <TextView
+            android:id="@+id/tvLatitue"
             style="@style/TextTitleLarge" />
     </LinearLayout>
 
@@ -86,7 +87,8 @@
             android:text="@string/label_longtitue" />
 
         <TextView
-            style="@style/TextTitleLarge"/>
+            android:id="@+id/tvLongtitue"
+            style="@style/TextTitleLarge" />
     </LinearLayout>
 
     <LinearLayout
@@ -105,7 +107,8 @@
             android:text="@string/label_timezone" />
 
         <TextView
-            style="@style/TextTitleLarge"/>
+            android:id="@+id/tvTimeZone"
+            style="@style/TextTitleLarge" />
 
     </LinearLayout>
 
@@ -125,6 +128,7 @@
             android:text="@string/label_region" />
 
         <TextView
+            android:id="@+id/tvRegion"
             style="@style/TextTitleLarge" />
 
     </LinearLayout>
@@ -133,12 +137,12 @@
         android:id="@+id/ivSttWeather"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        app:srcCompat="@drawable/img_sun"
         android:layout_marginTop="@dimen/spacing_tiny"
+        android:src="@drawable/img_sun"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lnRegion"
-        tools:ignore="ContentDescription"/>
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/tvDegree"
@@ -164,13 +168,13 @@
             android:id="@+id/tvWindSpeed"
             style="@style/TextTitleLarge"
             android:layout_width="match_parent"
-            android:textSize="24sp"/>
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/tvHumidity"
             style="@style/TextTitleLarge"
             android:layout_width="match_parent"
-            android:textSize="24sp"/>
+            android:textSize="24sp" />
 
     </LinearLayout>
 
@@ -187,23 +191,23 @@
         <TextView
             android:id="@+id/tvTueDay"
             style="@style/TextContentLarge"
-            android:gravity="center"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/tvWednesday"
             style="@style/TextContentLarge"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/tvThurday"
             style="@style/TextContentLarge"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/tvFriDay"
             style="@style/TextContentLarge"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -218,32 +222,32 @@
         app:layout_constraintTop_toBottomOf="@id/lnDate">
 
         <ImageView
-            android:layout_weight="1"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:srcCompat="@drawable/img_sun"
+            android:layout_weight="1"
+            android:src="@drawable/img_sun"
             tools:ignore="ContentDescription" />
 
         <ImageView
-            android:layout_weight="1"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:srcCompat="@drawable/img_sun"
-            tools:ignore="ContentDescription"/>
+            android:layout_weight="1"
+            android:src="@drawable/img_sun"
+            tools:ignore="ContentDescription" />
 
         <ImageView
-            android:layout_weight="1"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:srcCompat="@drawable/img_sun"
-            tools:ignore="ContentDescription"/>
+            android:layout_weight="1"
+            android:src="@drawable/img_sun"
+            tools:ignore="ContentDescription" />
 
         <ImageView
-            android:layout_weight="1"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            app:srcCompat="@drawable/img_sun"
-            tools:ignore="ContentDescription"/>
+            android:layout_weight="1"
+            android:src="@drawable/img_sun"
+            tools:ignore="ContentDescription" />
 
     </LinearLayout>
 
@@ -260,26 +264,26 @@
         <TextView
             android:id="@+id/tvTempDay1"
             style="@style/TextContentLarge"
-            android:gravity="center"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/tvTempDay2"
             style="@style/TextContentLarge"
-            android:gravity="center"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/tvTempDay3"
             style="@style/TextContentLarge"
-            android:gravity="center"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:gravity="center" />
 
         <TextView
             android:id="@+id/tvTempDay4"
             style="@style/TextContentLarge"
-            android:gravity="center"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:gravity="center" />
 
     </LinearLayout>
 

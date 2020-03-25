@@ -17,8 +17,10 @@ import com.airbnb.mvrx.*
 import com.google.android.gms.location.*
 
 import com.play.weather_mvrx.R
+import com.play.weather_mvrx.data.response.GeoPositionSearch
 import kotlinx.android.synthetic.main.fragment_main.*
 import pub.devrel.easypermissions.EasyPermissions
+import java.text.SimpleDateFormat
 
 class MainFragment : BaseMvRxFragment() {
 
@@ -37,20 +39,58 @@ class MainFragment : BaseMvRxFragment() {
         requestPermission()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
     override fun invalidate() = withState(viewModel) { state ->
 
-       tvTempDay2.text=state.geoPositionSearch()?.englishName
+        tvCountry.text = state.geoPositionSearch()?.country?.englishName
+        tvLatitue.text = state.geoPositionSearch()?.geoPosition?.latitude.toString()
+        tvLongtitue.text = state.geoPositionSearch()?.geoPosition?.longitude.toString()
+        tvTimeZone.text = state.geoPositionSearch()?.timeZone?.name
+        tvRegion.text = state.geoPositionSearch()?.region?.englishName
+
+//        val dateInStringDay1 = state.weatherResult()?.DailyForecasts!![1].date
+//        val dateInStringDay2 = state.weatherResult()?.DailyForecasts!![2].date
+//        val dateInStringDay3 = state.weatherResult()?.DailyForecasts!![3].date
+//        val dateInStringDay4 = state.weatherResult()?.DailyForecasts!![4].date
+//
+//        val sdf5days = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+//        val shortdateInStringDay1 = dateInStringDay1?.substring(0, 19)
+//        val shortdateInStringDay2 = dateInStringDay2?.substring(0, 19)
+//        val shortdateInStringDay3 = dateInStringDay3?.substring(0, 19)
+//        val shortdateInStringDay4 = dateInStringDay4?.substring(0, 19)
+//
+//        val sdf5days1 = SimpleDateFormat("EEE")
+//        val day1 = sdf5days.parse(shortdateInStringDay1)
+//        val day2 = sdf5days.parse(shortdateInStringDay2)
+//        val day3 = sdf5days.parse(shortdateInStringDay3)
+//        val day4 = sdf5days.parse(shortdateInStringDay4)
+//
+//        val resultday1 = sdf5days1.format(day1)
+//        val resultday2 = sdf5days1.format(day2)
+//        val resultday3 = sdf5days1.format(day3)
+//        val resultday4 = sdf5days1.format(day4)
+//
+//        tvTueDay.text = resultday1
+//        tvWednesday.text = resultday2
+//        tvThurday.text = resultday3
+//        tvFriDay.text = resultday4
+
+        tvTempDay1.text = state.weatherResult()?.Headline?.category.toString()
     }
 
     private fun requestPermission() {
         if (EasyPermissions.hasPermissions(activity!!, *ACCESS_FINE_LOCATION)) {
             // Have permissions, do the thing
             mLocationRequest = LocationRequest()
-            locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            locationManager =
+                activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
             //Check gps is enable or not
 
             if (!locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -106,7 +146,11 @@ class MainFragment : BaseMvRxFragment() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
 
-        fusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
+        fusedLocationClient.requestLocationUpdates(
+            mLocationRequest,
+            mLocationCallback,
+            Looper.myLooper()
+        )
     }
 
     private val mLocationCallback = object : LocationCallback() {
@@ -122,7 +166,11 @@ class MainFragment : BaseMvRxFragment() {
         mLastLocation = location
         latitude = mLastLocation.latitude.toString()
         longitude = mLastLocation.longitude.toString()
-       viewModel.getDataGeoPositionSearch("${latitude},${longitude}")
+        viewModel.getDataGeoPositionSearch("${latitude},${longitude}")
+    }
+
+    private fun convertFahrenheitToKelvin(fahrenheit: Float): Double {
+        return (5.0 / 9 * (fahrenheit - 32) + 273)
     }
 
     companion object {

@@ -1,6 +1,7 @@
 package com.play.weather_mvrx.domain.usercase.base
 
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
