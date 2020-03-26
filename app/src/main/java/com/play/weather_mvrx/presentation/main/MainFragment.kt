@@ -51,13 +51,7 @@ class MainFragment : BaseMvRxFragment() {
 
         try {
             getDataPositionSearch(state.geoPositionSearch()!!)
-        } catch (e: Exception) { }
-
-        try {
             getDataWeatherCurrent(state.listWeatherCurent()!!)
-        } catch (e: Exception) { }
-
-        try {
             getDataWeather5day(state.weatherResult()!!)
         } catch (e: Exception) { }
 
