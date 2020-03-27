@@ -18,6 +18,8 @@ class MainViewModel @AssistedInject constructor(@Assisted state: MainState, priv
     }
 
     private fun setDataGeoPositionSearch(geoPositionSearch: GeoPositionSearch) {
+        getDataWeather5days(geoPositionSearch.key.toString())
+        getDataWeatherCurrent(geoPositionSearch.key.toString())
         repo.getDataGeoPositionObservable(geoPositionSearch).execute { copy(geoPositionSearch = it) }
     }
 

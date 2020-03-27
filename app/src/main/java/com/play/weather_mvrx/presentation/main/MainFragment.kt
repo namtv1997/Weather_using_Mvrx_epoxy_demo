@@ -48,13 +48,22 @@ class MainFragment : BaseMvRxFragment() {
 
     @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun invalidate() = withState(viewModel) { state ->
+        when (state.geoPositionSearch){
+            is Success ->{
+                getDataPositionSearch(state.geoPositionSearch()!!)
+            }
+        }
+        when(state.listWeatherCurent){
+            is Success ->{
+                getDataWeatherCurrent(state.listWeatherCurent()!!)
+            }
+        }
 
-        try {
-            getDataPositionSearch(state.geoPositionSearch()!!)
-            getDataWeatherCurrent(state.listWeatherCurent()!!)
-            getDataWeather5day(state.weatherResult()!!)
-        } catch (e: Exception) { }
-
+        when(state.weatherResult){
+            is Success ->{
+                getDataWeather5day(state.weatherResult()!!)
+            }
+        }
     }
 
     private fun requestPermission() {
@@ -115,7 +124,11 @@ class MainFragment : BaseMvRxFragment() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
 
-        fusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
+        fusedLocationClient.requestLocationUpdates(
+            mLocationRequest,
+            mLocationCallback,
+            Looper.myLooper()
+        )
     }
 
     private val mLocationCallback = object : LocationCallback() {
@@ -136,8 +149,6 @@ class MainFragment : BaseMvRxFragment() {
 
 
     private fun getDataPositionSearch(geoPositionSearch: GeoPositionSearch) {
-        viewModel.getDataWeather5days(geoPositionSearch.key!!)
-        viewModel.getDataWeatherCurrent(geoPositionSearch.key)
         tvCountry.text = geoPositionSearch.country?.englishName
         tvLatitue.text = geoPositionSearch.geoPosition?.latitude.toString()
         tvLongtitue.text = geoPositionSearch.geoPosition?.longitude.toString()
@@ -184,10 +195,18 @@ class MainFragment : BaseMvRxFragment() {
         tvThurday.text = result2.toString()
         tvFriDay.text = result3.toString()
 
-        val resultTemp = weatherResult.DailyForecasts?.get(1)?.temperature?.minimum?.value?.minus(1)?.times(5)?.div(9)?.roundToInt()
-        val resultTemp1 = weatherResult.DailyForecasts?.get(2)?.temperature?.minimum?.value?.minus(1)?.times(5)?.div(9)?.roundToInt()
-        val resultTemp2 = weatherResult.DailyForecasts?.get(3)?.temperature?.minimum?.value?.minus(1)?.times(5)?.div(9)?.roundToInt()
-        val resultTemp3 = weatherResult.DailyForecasts?.get(4)?.temperature?.minimum?.value?.minus(1)?.times(5)?.div(9)?.roundToInt()
+        val resultTemp =
+            weatherResult.DailyForecasts?.get(1)?.temperature?.minimum?.value?.minus(1)?.times(5)
+                ?.div(9)?.roundToInt()
+        val resultTemp1 =
+            weatherResult.DailyForecasts?.get(2)?.temperature?.minimum?.value?.minus(1)?.times(5)
+                ?.div(9)?.roundToInt()
+        val resultTemp2 =
+            weatherResult.DailyForecasts?.get(3)?.temperature?.minimum?.value?.minus(1)?.times(5)
+                ?.div(9)?.roundToInt()
+        val resultTemp3 =
+            weatherResult.DailyForecasts?.get(4)?.temperature?.minimum?.value?.minus(1)?.times(5)
+                ?.div(9)?.roundToInt()
         tvTempDay1.text = "${resultTemp}ºC"
         tvTempDay2.text = "${resultTemp1}ºC"
         tvTempDay3.text = "${resultTemp2}ºC"
