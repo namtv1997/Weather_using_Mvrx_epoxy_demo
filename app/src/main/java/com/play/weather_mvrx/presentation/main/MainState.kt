@@ -1,4 +1,4 @@
-package com.play.weather_mvrx.data.state
+package com.play.weather_mvrx.presentation.main
 
 import com.airbnb.mvrx.Async
 import com.airbnb.mvrx.MvRxState

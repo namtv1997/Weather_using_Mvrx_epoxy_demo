@@ -1,6 +1,5 @@
 package com.play.weather_mvrx.presentation.main
 
-import com.play.weather_mvrx.data.state.MainState
 import com.play.weather_mvrx.data.response.GeoPositionSearch
 import com.play.weather_mvrx.data.response.WeatherCurent
 import com.play.weather_mvrx.data.response.WeatherResult
